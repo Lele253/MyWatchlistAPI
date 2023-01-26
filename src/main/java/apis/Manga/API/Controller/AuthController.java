@@ -41,7 +41,6 @@ public class AuthController {
         this.jwtTokenProvider = jwtTokenProvider;
         this.filmService = filmService;
         this.champService = champService;
-
     }
 
     @CrossOrigin
@@ -65,22 +64,6 @@ public class AuthController {
     public Optional<User> getUser(){
         return userRepository.findByEmail(jwtTokenProvider.getUserMailFromToken( JwtAuthentificationFilter.x) );
     }
-    @CrossOrigin
-    @GetMapping("/user/all/{nutzerId}")
-    public User leseNutzerListe(@PathVariable long nutzerId){
-        Optional<User> user = Optional.ofNullable(userRepository.findById(nutzerId));
-        if(user.isPresent()){
-            return user.get();
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-    }
-
-    @CrossOrigin
-    @GetMapping("/user/all")
-    public List<User> getUserAll(){
-        return userRepository.findAll();
-    }
-
 
     @CrossOrigin
     @PostMapping(value = "/login")
